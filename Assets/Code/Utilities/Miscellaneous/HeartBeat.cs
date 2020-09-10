@@ -1,9 +1,7 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 /// <summary>
-/// Brief description of the class here
+/// Script to simulate the beating of a heart
 /// </summary>
 public class HeartBeat : MonoBehaviour
 {
@@ -11,17 +9,18 @@ public class HeartBeat : MonoBehaviour
 
     // TODO: This delegates should be in a manager holding all the UI elements that could be faded
     public delegate void FinishedFadingInEventHandler(object source, System.EventArgs args);
+
     public event FinishedFadingInEventHandler FinishedFadingIn;
 
     public delegate void FinishedFadingOutEventHandler(object source, System.EventArgs args);
+
     public event FinishedFadingOutEventHandler FinishedFadingOut;
 
     #endregion
 
-    #region Public Attributes 
+    #region Public Attributes
 
     [Header("Values")]
-
     public Vector3 fadedOutValue = Vector3.zero;
 
     private Vector3 fadedInValue = Vector3.one * 10.0f;
@@ -34,12 +33,6 @@ public class HeartBeat : MonoBehaviour
 
     [Header("Starting state")]
     public FadeState startState = FadeState.FadedIn;
-
-    #endregion
-
-    #region Protected Attributes
-
-
 
     #endregion
 
@@ -94,7 +87,6 @@ public class HeartBeat : MonoBehaviour
     /// </summary>
     private void Init()
     {
-
     }
 
     #endregion
@@ -117,15 +109,19 @@ public class HeartBeat : MonoBehaviour
             case FadeState.FadedOut:
                 ExitFadedOut();
                 break;
+
             case FadeState.FadingIn:
                 ExitFadingIn();
                 break;
+
             case FadeState.FadedIn:
                 ExitFadedIn();
                 break;
+
             case FadeState.FadingOut:
                 ExitFadingOut();
                 break;
+
             default:
                 Debug.Log("Invalid FadeState : " + currState);
                 break;
@@ -136,15 +132,19 @@ public class HeartBeat : MonoBehaviour
             case FadeState.FadedOut:
                 EnterFadedOut();
                 break;
+
             case FadeState.FadingIn:
                 EnterFadingIn(forcedStartTime);
                 break;
+
             case FadeState.FadedIn:
                 EnterFadedIn();
                 break;
+
             case FadeState.FadingOut:
                 EnterFadingOut(forcedStartTime);
                 break;
+
             default:
                 Debug.Log("Invalid FadeState : " + newState);
                 break;
@@ -235,14 +235,18 @@ public class HeartBeat : MonoBehaviour
         {
             case FadeState.FadedOut:
                 break;
+
             case FadeState.FadingIn:
                 UpdateFadingIn(dt);
                 break;
+
             case FadeState.FadedIn:
                 break;
+
             case FadeState.FadingOut:
                 UpdateFadingOut(dt);
                 break;
+
             default:
                 Debug.Log("Invalid FadeState : " + currState);
                 break;
@@ -355,7 +359,8 @@ public class HeartBeat : MonoBehaviour
             return;
         }
 
-        // if trying to reverse the fade while already fading we are going to set the timer to reverse the direction smoothly
+        // if trying to reverse the fade while already fading we are going to set the timer to
+        // reverse the direction smoothly
         float timeLeftToFinish = 0.0f;
 
         if (FadingIn || FadingOut)

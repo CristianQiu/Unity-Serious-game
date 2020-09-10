@@ -6,11 +6,12 @@ using UnityEngine.Rendering.PostProcessing;
 /// </summary>
 public class DofFader : MonoBehaviour
 {
-    #region Public Attributes 
+    #region Public Attributes
 
     [Header("Values")]
     [Range(0.1f, 5.0f)]
     public float fadedOutValue = 0.1f;
+
     [Range(0.1f, 5.0f)]
     public float fadedInValue = 2.0f;
 
@@ -26,8 +27,6 @@ public class DofFader : MonoBehaviour
     #endregion
 
     #region Protected Attributes
-
-
 
     #endregion
 
@@ -53,7 +52,7 @@ public class DofFader : MonoBehaviour
     #region MonoBehaviour Methods
 
     // Use this for initialization
-    void Start()
+    private void Start()
     {
         Init();
         GameManager.Instance.ShowDescription += OnShowDescription;
@@ -61,7 +60,7 @@ public class DofFader : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
+    private void Update()
     {
         float dt = Time.deltaTime;
 
@@ -109,15 +108,19 @@ public class DofFader : MonoBehaviour
             case FadeState.FadedOut:
                 ExitFadedOut();
                 break;
+
             case FadeState.FadingIn:
                 ExitFadingIn();
                 break;
+
             case FadeState.FadedIn:
                 ExitFadedIn();
                 break;
+
             case FadeState.FadingOut:
                 ExitFadingOut();
                 break;
+
             default:
                 Debug.Log("Invalid FadeState : " + currState);
                 break;
@@ -128,15 +131,19 @@ public class DofFader : MonoBehaviour
             case FadeState.FadedOut:
                 EnterFadedOut();
                 break;
+
             case FadeState.FadingIn:
                 EnterFadingIn(forcedStartTime);
                 break;
+
             case FadeState.FadedIn:
                 EnterFadedIn();
                 break;
+
             case FadeState.FadingOut:
                 EnterFadingOut(forcedStartTime);
                 break;
+
             default:
                 Debug.Log("Invalid FadeState : " + newState);
                 break;
@@ -227,14 +234,18 @@ public class DofFader : MonoBehaviour
         {
             case FadeState.FadedOut:
                 break;
+
             case FadeState.FadingIn:
                 UpdateFadingIn(dt);
                 break;
+
             case FadeState.FadedIn:
                 break;
+
             case FadeState.FadingOut:
                 UpdateFadingOut(dt);
                 break;
+
             default:
                 Debug.Log("Invalid FadeState : " + currState);
                 break;
@@ -289,7 +300,7 @@ public class DofFader : MonoBehaviour
     private void SetCurrFocusDistance(float newValue)
     {
         currValue = newValue;
-        dof.focusDistance.value = currValue; 
+        dof.focusDistance.value = currValue;
     }
 
     /// <summary>
@@ -311,7 +322,8 @@ public class DofFader : MonoBehaviour
     }
 
     /// <summary>
-    /// Start the fading process if forceInstant is true then the new state will be already faded to the newState
+    /// Start the fading process if forceInstant is true then the new state will be already faded to
+    /// the newState
     /// </summary>
     /// <param name="newState"></param>
     /// <param name="forceInstant"></param>
@@ -337,7 +349,8 @@ public class DofFader : MonoBehaviour
             return;
         }
 
-        // if trying to reverse the fade while already fading we are going to set the timer to reverse the direction smoothly
+        // if trying to reverse the fade while already fading we are going to set the timer to
+        // reverse the direction smoothly
         float timeLeftToFinish = 0.0f;
 
         if (FadingIn || FadingOut)

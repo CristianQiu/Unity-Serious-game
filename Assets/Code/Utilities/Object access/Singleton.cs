@@ -7,24 +7,20 @@ public class Singleton<T> : MonoBehaviour where T : Component
 {
     #region Public Attributes
 
-
-
     #endregion
 
     #region Protected Attributes
-
-
 
     #endregion
 
     #region Private Attributes
 
     protected static T instance = null;
-	
+
     #endregion
-	
+
     #region Properties
-	
+
     public static T Instance
     {
         get
@@ -44,11 +40,11 @@ public class Singleton<T> : MonoBehaviour where T : Component
             return instance;
         }
     }
-	
+
     #endregion
-	
+
     #region MonoBehaviour Methods
-	
+
     protected virtual void Awake()
     {
         // keep the instance through scenes
@@ -63,24 +59,6 @@ public class Singleton<T> : MonoBehaviour where T : Component
             Destroy(gameObject);
         }
     }
-
-    // Use this for initialization
-    private void Start () 
-    {
-		
-    }
-	
-    // Update is called once per frame
-    private void Update () 
-    {
-		
-    }
-	
-    #endregion
-	
-    #region Methods
-
-	
 
     #endregion
 }

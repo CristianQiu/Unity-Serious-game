@@ -1,10 +1,9 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.UI;
 
 /// <summary>
-/// This script is going to help to player to write the words that are over the directions that he can move
+/// This script is going to help to player to write the words that are over the directions that he
+/// can move
 /// </summary>
 [RequireComponent(typeof(Player))]
 public class PlayerWordWriter : MonoBehaviour
@@ -12,6 +11,7 @@ public class PlayerWordWriter : MonoBehaviour
     #region Delegates
 
     public delegate void FinishedWordMatchEventHandler(object source, System.EventArgs args);
+
     public event FinishedWordMatchEventHandler FinishedWordMatch;
 
     #endregion
@@ -20,13 +20,8 @@ public class PlayerWordWriter : MonoBehaviour
 
     // fill order = fwd, right, bwd, left
     public Text[] texts = null;
+
     public Color defaultTextColor = Color.white;
-
-    #endregion
-
-    #region Protected Attributes
-
-
 
     #endregion
 
@@ -37,30 +32,24 @@ public class PlayerWordWriter : MonoBehaviour
 
     // the "raw" available direction texts i.e: "Delante" null "Detrás" "Izquierda"
     private string[] availableDirTexts = new string[4];
+
     // the words that we may be written at this time i.e. "Delante" null "Detrás" null
     private string[] wordsBeingWritten = new string[4];
+
     private int atIndexOfWordBeingWritten = 0;
 
     private Player theGamePlayer = null;
 
     #endregion
 
-    #region Properties
-
-
-
-    #endregion
-
     #region MonoBehaviour Methods
 
-    // Use this for initialization
-    void Start()
+    private void Start()
     {
         Init();
     }
 
-    // Update is called once per frame
-    void Update()
+    private void Update()
     {
         if (!theGamePlayer.CanWriteToMove)
             return;
@@ -121,31 +110,11 @@ public class PlayerWordWriter : MonoBehaviour
     }
 
     /// <summary>
-    /// Fill the string array according to the dirs the player can move to, also reset the color, just in case
+    /// Fill the string array according to the dirs the player can move to, also reset the color,
+    /// just in case
     /// </summary>
     public void ResetAvailableDirTexts()
     {
-        //TODO: THIS IS TESTING !CHANGE IT AT SOME POINT
-        //if (theGamePlayer.CanMoveFwd)
-        //    availableDirTexts[0] = "Delante";
-        //else
-        //    availableDirTexts[0] = null;
-
-        //if (theGamePlayer.CanMoveRight)
-        //    availableDirTexts[1] = "Derecha";
-        //else
-        //    availableDirTexts[1] = null;
-
-        //if (theGamePlayer.CanMoveBwd)
-        //    availableDirTexts[2] = "Detrás";
-        //else
-        //    availableDirTexts[2] = null;
-
-        //if (theGamePlayer.CanMoveLeft)
-        //    availableDirTexts[3] = "Izquierda";
-        //else
-        //    availableDirTexts[3] = null;
-
         if (theGamePlayer.CanMoveFwd)
             availableDirTexts[0] = theGamePlayer.CurrTile.tileWords.fwdWord;
         else
@@ -174,8 +143,8 @@ public class PlayerWordWriter : MonoBehaviour
     }
 
     /// <summary>
-    /// Reset all the text state, meaning all color will be cleared, the written words will be erased
-    /// and the text displayed will be "reinitialized"
+    /// Reset all the text state, meaning all color will be cleared, the written words will be
+    /// erased and the text displayed will be "reinitialized"
     /// </summary>
     private void ResetAllTexts()
     {
@@ -212,7 +181,7 @@ public class PlayerWordWriter : MonoBehaviour
     private bool IsAnyWordBeingWritten()
     {
         bool isAnyWordBeingWritten = false;
-        
+
         for (int i = 0; i < wordsBeingWritten.Length; i++)
         {
             if (wordsBeingWritten[i] != null)
@@ -254,18 +223,15 @@ public class PlayerWordWriter : MonoBehaviour
             SfxManager.Instance.PlaySfx(SfxManager.Instance.clipWordFailed, true);
             ResetAllTexts();
             return;
-        }          
-            
+        }
+
         if (letterToMatch == null)
             return;
 
         bool finishedMatchingWord = false;
 
-        // This part is becoming a monstruosity, perhaps should have a look so I can better the presentation of this chunk of code
-
-        // CHECKS THE FIRST LETTER
-
-        // if the player didn't match anything yet, compare against all available direction texts
+        // CHECKS THE FIRST LETTER if the player didn't match anything yet, compare against all
+        // available direction texts
         if (!hasMatchedSomethingAlready)
         {
             bool playedTapSoundAlrdy = false;
@@ -297,7 +263,7 @@ public class PlayerWordWriter : MonoBehaviour
                     {
                         OnFinishedWordMatch(wordsBeingWritten[i]);
                         finishedMatchingWord = true;
-                    } 
+                    }
                 }
             }
 
@@ -321,7 +287,7 @@ public class PlayerWordWriter : MonoBehaviour
                     continue;
 
                 char currCharChecked = wordsBeingWritten[i][atIndexOfWordBeingWritten];
-                
+
                 if (currCharChecked.ToString().Equals(letterToMatch))
                 {
                     match = true;
@@ -338,19 +304,18 @@ public class PlayerWordWriter : MonoBehaviour
                     {
                         OnFinishedWordMatch(wordsBeingWritten[i]);
                         finishedMatchingWord = true;
-                    }     
+                    }
                 }
                 else
                 {
                     // reset this word being written and its related text to the default color
                     ResetTextToDefault(i);
-                    
+
                     if (!IsAnyWordBeingWritten())
                     {
                         SfxManager.Instance.PlaySfx(SfxManager.Instance.clipWordFailed, true);
                         GameManager.Instance.TypoErrors++;
                     }
-                       
                 }
             }
 
@@ -371,8 +336,8 @@ public class PlayerWordWriter : MonoBehaviour
         Text UIText = texts[atText];
         string textString = UIText.text;
 
-        // get the index of the letter we want to colorize. HACK!! 24 is all the characters offset that the <color...> tag introduces
-        // so we get rid of it by multiplying the real index
+        // get the index of the letter we want to colorize. HACK!! 24 is all the characters offset
+        // that the <color...> tag introduces so we get rid of it by multiplying the real index
         if (matchesWithLowerCase)
             letterToBeColored = letterToBeColored.ToUpper();
 
@@ -415,7 +380,8 @@ public class PlayerWordWriter : MonoBehaviour
     }
 
     /// <summary>
-    /// Calculate the dir (0 1 2 3 fwd, right, bwd, left) the player should move to based on the word that has been written
+    /// Calculate the dir (0 1 2 3 fwd, right, bwd, left) the player should move to based on the
+    /// word that has been written
     /// </summary>
     /// <param name="wordBeingWritten"></param>
     /// <returns></returns>

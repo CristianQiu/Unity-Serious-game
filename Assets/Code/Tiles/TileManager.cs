@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 /// <summary>
 /// A manager for the cube tiles to ease accessing to some info more coherently
@@ -14,41 +12,23 @@ public class TileManager : MonoBehaviour
 
     #endregion
 
-    #region Protected Attributes
-
-
-
-    #endregion
-
     #region Private Attributes
 
-    private Tile [] tiles = null;
-	
-    #endregion
-	
-    #region Properties
-	
-    
-   
+    private Tile[] tiles = null;
+
     #endregion
 
     #region MonoBehaviour Methods
-	
+
     private void Awake()
     {
         ObjRegistry.RegisterObj(this);
     }
 
     // Use this for initialization
-    void Start () 
+    private void Start()
     {
         Init();
-    }
-	
-    // Update is called once per frame
-    void Update () 
-    {
-        
     }
 
     private void OnDestroy()

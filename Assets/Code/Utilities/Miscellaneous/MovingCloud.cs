@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 /// <summary>
 /// Script for the moving background clouds
@@ -16,36 +14,22 @@ public class MovingCloud : MonoBehaviour
 
     #endregion
 
-    #region Protected Attributes
-
-
-
-    #endregion
-
     #region Private Attributes
 
     private float currXSpeed = 0.0f;
     private float xOffsetFromEnterToExit = 0.0f;
-	
-    #endregion
-	
-    #region Properties
-	
-    
-   
+
     #endregion
 
     #region MonoBehaviour Methods
-	
-    // Use this for initialization
-    void Start () 
+
+    private void Start()
     {
         RandomizeStartingSpeed();
         xOffsetFromEnterToExit = (cloudExitPos.position - cloudEnterPos.position).magnitude;
     }
-	
-    // Update is called once per frame
-    void Update () 
+
+    private void Update()
     {
         float dt = Time.deltaTime;
         Move(dt, xSpd);
@@ -78,9 +62,11 @@ public class MovingCloud : MonoBehaviour
             case 0:
                 currXSpeed = xSpd;
                 break;
+
             case 1:
                 currXSpeed = altXSpd;
                 break;
+
             default:
                 break;
         }

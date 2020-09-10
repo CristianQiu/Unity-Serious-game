@@ -1,9 +1,7 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using Cinemachine;
 using UnityEngine;
-using UnityEngine.UI;
-using Cinemachine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 /// <summary>
 /// Brief description of the class here
@@ -42,8 +40,6 @@ public class MenuManager : MonoBehaviour
 
     #region Protected Attributes
 
-
-
     #endregion
 
     #region Private Attributes
@@ -57,26 +53,22 @@ public class MenuManager : MonoBehaviour
     private CanvasRendererSymmetricAlphaFader[] videoTutorialsFaders = null;
 
     private ChosenOption chosenOption = ChosenOption.Invalid;
-	
+
     #endregion
-	
+
     #region Properties
-	
-    
-   
+
     #endregion
 
     #region MonoBehaviour Methods
-	
-    // Use this for initialization
-    void Start () 
+
+    private void Start()
     {
         Cursor.visible = false;
         Init();
     }
-	
-    // Update is called once per frame
-    void Update () 
+
+    private void Update()
     {
         if (!hasControl && chosenOption != ChosenOption.Tutorial)
             return;
@@ -86,7 +78,7 @@ public class MenuManager : MonoBehaviour
             if (Input.GetKeyDown(KeyCode.Escape))
             {
                 hasControl = true;
-                for(int i = 0; i < videoTutorialsFaders.Length; i++)
+                for (int i = 0; i < videoTutorialsFaders.Length; i++)
                 {
                     videoTutorialsFaders[i].StartFade(FadeState.FadingOut, false);
                 }
@@ -102,7 +94,6 @@ public class MenuManager : MonoBehaviour
             SelectOption(currSelectedOption);
             SfxManager.Instance.PlaySfx(SfxManager.Instance.clipWordCompleted, true);
         }
-            
 
         if (nextOption == currSelectedOption)
             return;
@@ -172,14 +163,17 @@ public class MenuManager : MonoBehaviour
                 // tutorial
                 GoTutorial();
                 break;
+
             case 1:
                 // game
                 StartGame();
                 break;
+
             case 2:
                 // exit
                 CloseApp();
                 break;
+
             default:
                 break;
         }
@@ -250,12 +244,15 @@ public class MenuManager : MonoBehaviour
             case ChosenOption.Tutorial:
                 //. ..
                 break;
+
             case ChosenOption.StartGame:
                 SceneManager.LoadScene("Level 1");
                 break;
+
             case ChosenOption.ExitApp:
                 Application.Quit();
                 break;
+
             default:
                 break;
         }

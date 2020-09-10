@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public enum EnemyState
 {
@@ -33,12 +31,6 @@ public class Enemy : MonoBehaviour
 
     #endregion
 
-    #region Protected Attributes
-
-
-
-    #endregion
-
     #region Private Attributes
 
     private bool isTravelingForward = true;
@@ -48,11 +40,11 @@ public class Enemy : MonoBehaviour
     private float timer = 0.0f;
     private float timeToMoveBetweenTiles = -1.0f;
     private bool textActivated = false;
-	
+
     #endregion
-	
+
     #region Properties
-	
+
     public Tile NextTile { get { return GetNextTile(); } }
 
     public bool TextActivated
@@ -72,16 +64,14 @@ public class Enemy : MonoBehaviour
 
     #region MonoBehaviour Methods
 
-    // Use this for initialization
-    void Start () 
+    private void Start()
     {
         Init();
 
         GameManager.Instance.TheGamePlayer.PlayerStartedMoving += OnPlayerStartedMoving;
     }
-	
-    // Update is called once per frame
-    void Update () 
+
+    private void Update()
     {
         float dt = Time.deltaTime;
 
@@ -90,7 +80,7 @@ public class Enemy : MonoBehaviour
         descriptionText.Update(textActivated);
     }
 
-    void Destroy()
+    private void Destroy()
     {
         GameManager mgr = GameManager.Instance;
 
@@ -117,7 +107,7 @@ public class Enemy : MonoBehaviour
     {
         timer = 0.0f;
     }
-    
+
     /// <summary>
     /// Swap the current state with the new one
     /// </summary>
@@ -135,9 +125,11 @@ public class Enemy : MonoBehaviour
             case EnemyState.Idle:
                 EnterIdle();
                 break;
+
             case EnemyState.Moving:
                 EnterMoving();
                 break;
+
             default:
                 Debug.Log("No such state : " + newState);
                 break;
@@ -198,9 +190,11 @@ public class Enemy : MonoBehaviour
             case EnemyState.Idle:
                 UpdateIdle(dt);
                 break;
+
             case EnemyState.Moving:
                 UpdateMoving(dt);
                 break;
+
             default:
                 Debug.Log("No such state : " + currState);
                 break;

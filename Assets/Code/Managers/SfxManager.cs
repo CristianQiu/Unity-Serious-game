@@ -1,8 +1,9 @@
 ﻿using UnityEngine;
 
 /// <summary>
-/// The Sfx manager, it stores all the sound effects of the game and has a pool of AudioSources generated
-/// at runtime, so it is possible to play several sound effects at the same time, with different settings
+/// The Sfx manager, it stores all the sound effects of the game and has a pool of AudioSources
+/// generated at runtime, so it is possible to play several sound effects at the same time, with
+/// different settings
 /// </summary>
 public sealed class SfxManager : Singleton<SfxManager>
 {
@@ -10,10 +11,12 @@ public sealed class SfxManager : Singleton<SfxManager>
 
     [Header("Pitch")]
     public float minPitch = 0.95f;
+
     public float maxPitch = 1.05f;
 
     [Header("Clips")]
     public AudioClip clipWordCompleted = null;
+
     public AudioClip clipWordFailed = null;
     public AudioClip clipKeyTap = null;
     public AudioClip clipSlide = null;
@@ -25,8 +28,6 @@ public sealed class SfxManager : Singleton<SfxManager>
     #endregion
 
     #region Protected Attributes
-
-
 
     #endregion
 
@@ -54,7 +55,7 @@ public sealed class SfxManager : Singleton<SfxManager>
     #region MonoBehaviour Methods
 
     // Use this for initialization
-    private void Start () 
+    private void Start()
     {
         Init();
     }
@@ -82,7 +83,7 @@ public sealed class SfxManager : Singleton<SfxManager>
         // add all sources as child gameobjects
         for (int i = 0; i < quantity; i++)
         {
-            GameObject newObj = new GameObject("AudioSource " +i);
+            GameObject newObj = new GameObject("AudioSource " + i);
             newObj.transform.parent = transform;
             newObj.transform.localPosition = Vector3.zero;
 

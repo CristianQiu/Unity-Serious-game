@@ -1,11 +1,9 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
 
 /// <summary>
-/// A class storing the text description where the player will have to guess from how certain 
-/// words are written
+/// A class storing the text description where the player will have to guess from how certain words
+/// are written
 /// </summary>
 [System.Serializable]
 public class DescriptionText
@@ -14,7 +12,6 @@ public class DescriptionText
 
     public DescriptionText()
     {
-        
     }
 
     #endregion
@@ -27,12 +24,6 @@ public class DescriptionText
 
     #endregion
 
-    #region Protected Attributes
-
-
-
-    #endregion
-
     #region Private Attributes
 
     private List<int> underscoreIndexes = new List<int>();
@@ -42,17 +33,11 @@ public class DescriptionText
 
     // they're inverted to ease substitution
     private const string red = "cc0000";
+
     private const string green = "00cc00";
     private const string white = "000000";
 
     #endregion
-
-    #region Properties
-
-
-
-    #endregion
-
 
     #region Methods
 
@@ -72,7 +57,6 @@ public class DescriptionText
                 GameManager.Instance.SwitchState(GameState.InLevelPlaying, false);
             }
         }
-
 
         GameManager mgr = GameManager.Instance;
         if (mgr == null || mgr.CurrState != GameState.InLevelShowingDescription || currUnderscoreIndex == underscoreIndexes.Count)
@@ -97,7 +81,6 @@ public class DescriptionText
         ColorUnderscoreIndex(green, index);
     }
 
-
     private void WriteLetterThatHasBeenInput(string letter)
     {
         bool rightAnswer = (solutionString[currUnderscoreIndex].ToString() == letter);
@@ -105,7 +88,7 @@ public class DescriptionText
         int index = underscoreIndexes[currUnderscoreIndex];
 
         string newText = GameManager.Instance.descriptionText.text.Insert(index, letter);
-        newText = newText.Remove(index+1, 1);
+        newText = newText.Remove(index + 1, 1);
 
         GameManager.Instance.SetDescriptionText(newText);
 
@@ -120,7 +103,6 @@ public class DescriptionText
             SfxManager.Instance.PlaySfx(SfxManager.Instance.clipWordFailed, true);
             GameManager.Instance.GuessLetterErrors++;
         }
-           
 
         if (!rightAnswer && GameManager.Instance.EnemyEvent)
             GameManager.Instance.theGamePlayer.TakeLife(-1);
@@ -176,12 +158,12 @@ public class DescriptionText
     }
 
     /// <summary>
-    /// Color an underscore position 
+    /// Color an underscore position
     /// </summary>
     /// <param name="index"></param>
     private void ColorUnderscoreIndex(string color, int index)
     {
-        int firstOffsetedIndex =  index - 2;
+        int firstOffsetedIndex = index - 2;
 
         int numPositions = 6;
         int lastOffsetedIndex = firstOffsetedIndex - numPositions;
@@ -209,7 +191,7 @@ public class DescriptionText
         //wantToAcceptThisFrame = false;
 
         string userWrote = null;
-        
+
         foreach (char c in Input.inputString)
         {
             // backspace / delete been pressed

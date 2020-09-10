@@ -10,21 +10,24 @@ public class AudioSourceVolumeFader : MonoBehaviour
 
     // TODO: This delegates should be in a manager holding all the UI elements that could be faded
     public delegate void FinishedFadingInEventHandler(object source, System.EventArgs args);
+
     public event FinishedFadingInEventHandler FinishedFadingIn;
 
     public delegate void FinishedFadingOutEventHandler(object source, System.EventArgs args);
+
     public event FinishedFadingOutEventHandler FinishedFadingOut;
 
     #endregion
 
-    #region Public Attributes 
+    #region Public Attributes
 
     [Header("Values")]
     [Range(0.0f, 1.0f)]
     public float fadedOutValue = 0.0f;
+
     [Range(0.0f, 1.0f)]
     public float fadedInValue = 1.0f;
-    
+
     [Header("Time")]
     public float timeToFade = 0.75f;
 
@@ -33,12 +36,6 @@ public class AudioSourceVolumeFader : MonoBehaviour
 
     [Header("Starting state")]
     public FadeState startState = FadeState.FadedIn;
-
-    #endregion
-
-    #region Protected Attributes
-
-
 
     #endregion
 
@@ -69,13 +66,11 @@ public class AudioSourceVolumeFader : MonoBehaviour
         SwitchState(startState, 0.0f, true);
     }
 
-    // Use this for initialization
     private void Start()
     {
         Init();
     }
 
-    // Update is called once per frame
     private void Update()
     {
         float dt = Time.deltaTime;
@@ -92,7 +87,6 @@ public class AudioSourceVolumeFader : MonoBehaviour
     /// </summary>
     private void Init()
     {
-
     }
 
     #endregion
@@ -115,15 +109,19 @@ public class AudioSourceVolumeFader : MonoBehaviour
             case FadeState.FadedOut:
                 ExitFadedOut();
                 break;
+
             case FadeState.FadingIn:
                 ExitFadingIn();
                 break;
+
             case FadeState.FadedIn:
                 ExitFadedIn();
                 break;
+
             case FadeState.FadingOut:
                 ExitFadingOut();
                 break;
+
             default:
                 Debug.Log("Invalid FadeState : " + currState);
                 break;
@@ -134,15 +132,19 @@ public class AudioSourceVolumeFader : MonoBehaviour
             case FadeState.FadedOut:
                 EnterFadedOut();
                 break;
+
             case FadeState.FadingIn:
                 EnterFadingIn(forcedStartTime);
                 break;
+
             case FadeState.FadedIn:
                 EnterFadedIn();
                 break;
+
             case FadeState.FadingOut:
                 EnterFadingOut(forcedStartTime);
                 break;
+
             default:
                 Debug.Log("Invalid FadeState : " + newState);
                 break;
@@ -233,14 +235,18 @@ public class AudioSourceVolumeFader : MonoBehaviour
         {
             case FadeState.FadedOut:
                 break;
+
             case FadeState.FadingIn:
                 UpdateFadingIn(dt);
                 break;
+
             case FadeState.FadedIn:
                 break;
+
             case FadeState.FadingOut:
                 UpdateFadingOut(dt);
                 break;
+
             default:
                 Debug.Log("Invalid FadeState : " + currState);
                 break;
@@ -352,8 +358,9 @@ public class AudioSourceVolumeFader : MonoBehaviour
 
             return;
         }
-            
-        // if trying to reverse the fade while already fading we are going to set the timer to reverse the direction smoothly
+
+        // if trying to reverse the fade while already fading we are going to set the timer to
+        // reverse the direction smoothly
         float timeLeftToFinish = 0.0f;
 
         if (FadingIn || FadingOut)

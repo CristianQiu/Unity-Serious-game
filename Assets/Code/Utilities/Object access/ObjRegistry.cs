@@ -1,33 +1,15 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using UnityEngine;
-using System;
 
 /// <summary>
 /// Class that can keep track of interesting objects without the needs of making said objects singletons
 /// </summary>
 public static class ObjRegistry
 {
-    #region Public Attributes
-
-
-
-    #endregion
-
-    #region Protected Attributes
-
-
-
-    #endregion
-
     #region Private Attributes
 
     private static Dictionary<Type, MonoBehaviour> registeredObjs = new Dictionary<Type, MonoBehaviour>(32);
-
-    #endregion
-
-    #region Properties
-
-
 
     #endregion
 
@@ -46,7 +28,7 @@ public static class ObjRegistry
         if (!registeredObjs.ContainsKey(key))
             registeredObjs.Add(key, obj);
         else
-            Debug.Log("There is already an instance of "+ key.ToString() +" and it won't be registered");
+            Debug.Log("There is already an instance of " + key.ToString() + " and it won't be registered");
 
         return;
     }
@@ -64,7 +46,7 @@ public static class ObjRegistry
 
         // if it couln't be removed display a message
         if (!removed)
-            Debug.Log("Can't unregister an instance of "+ key.ToString() +" because there is none in the dictionary");
+            Debug.Log("Can't unregister an instance of " + key.ToString() + " because there is none in the dictionary");
 
         return;
     }
@@ -83,7 +65,7 @@ public static class ObjRegistry
         registeredObjs.TryGetValue(key, out mono);
 
         if (mono == null)
-            Debug.Log("Can't get the type "+ key.ToString() +" because there is none in the dictionary");
+            Debug.Log("Can't get the type " + key.ToString() + " because there is none in the dictionary");
 
         T obj = mono as T;
         return obj;

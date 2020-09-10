@@ -1,8 +1,7 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public enum GameState
 {
@@ -27,9 +26,11 @@ public class GameManager : Singleton<GameManager>
     #region Delegates
 
     public delegate void ShowDescriptionEventHandler(object source, System.EventArgs args);
+
     public event ShowDescriptionEventHandler ShowDescription;
 
     public delegate void HideDescriptionEventHandler(object source, System.EventArgs args);
+
     public event HideDescriptionEventHandler HideDescription;
 
     #endregion
@@ -44,6 +45,7 @@ public class GameManager : Singleton<GameManager>
 
     // ScreenSpace UI Parent
     public GameObject screenSpaceUiParent = null;
+
     public Text descriptionText = null;
     public Text DIEDText = null;
 
@@ -59,8 +61,6 @@ public class GameManager : Singleton<GameManager>
     #endregion
 
     #region Protected Attributes
-
-
 
     #endregion
 
@@ -78,7 +78,7 @@ public class GameManager : Singleton<GameManager>
     private CanvasRendererSymmetricAlphaFader[] canvasRendererAlphaFaders = null;
 
     #endregion
-	
+
     #region Properties
 
     public List<Enemy> Enemies { get { return enemies; } }
@@ -136,6 +136,7 @@ public class GameManager : Singleton<GameManager>
             typoErrors = value;
         }
     }
+
     public int GuessLetterErrors
     {
         get
@@ -153,17 +154,14 @@ public class GameManager : Singleton<GameManager>
 
     #region MonoBehaviour Methods
 
-    // Use this for initialization
-    void Start () 
+    private void Start()
     {
         blackBg.FinishedFadingIn += OnFinishFadingIn;
         Cursor.visible = false;
         Init();
     }
 
-
-    // Update is called once per frame
-    void Update () 
+    private void Update()
     {
         float dt = Time.deltaTime;
 
@@ -173,7 +171,7 @@ public class GameManager : Singleton<GameManager>
             blackBg.StartFade(FadeState.FadingIn, false);
             musicFader.StartFade(FadeState.FadingOut, false);
         }
-            
+
         UpdateState(dt);
     }
 
@@ -226,26 +224,33 @@ public class GameManager : Singleton<GameManager>
             case GameState.Invalid:
                 Debug.Log("Initializing the gamestate from Invalid, ignore this message if you just started the game");
                 break;
+
             case GameState.InMenu:
                 ExitMenu();
                 break;
+
             case GameState.InLevelPlaying:
                 ExitInLevelPlaying();
                 break;
+
             case GameState.InLevelShowingDescription:
                 ExitInLevelShowingDescription();
                 break;
+
             case GameState.Paused:
                 ExitPaused();
                 break;
+
             case GameState.GameOverByDying:
                 timer = 0.0f;
                 break;
+
             case GameState.GameOverByWin:
                 timer = 0.0f;
                 break;
+
             default:
-                Debug.Log("No such state " +currState);
+                Debug.Log("No such state " + currState);
                 break;
         }
 
@@ -254,15 +259,19 @@ public class GameManager : Singleton<GameManager>
             case GameState.InMenu:
                 EnterMenu();
                 break;
+
             case GameState.InLevelPlaying:
                 EnterInLevelPlaying();
                 break;
+
             case GameState.InLevelShowingDescription:
                 EnterInLevelShowingDescription();
                 break;
+
             case GameState.Paused:
                 EnterPaused();
                 break;
+
             case GameState.GameOverByDying:
                 DIEDText.enabled = true;
                 theGamePlayer.Disabled = true;
@@ -270,6 +279,7 @@ public class GameManager : Singleton<GameManager>
                 musicFader.StartFade(FadeState.FadingOut, false);
                 timer = 0.0f;
                 break;
+
             case GameState.GameOverByWin:
 
                 theGamePlayer.Disabled = true;
@@ -286,14 +296,14 @@ public class GameManager : Singleton<GameManager>
                 float guessLetterErrorsScore = (1.0f - (guessLetterErrors / 10.0f)) * 10.0f;
 
                 float finalScore = (trophyScore + typoErrorsScore + guessLetterErrorsScore) / 3.0f;
-                
 
                 foundTrophiesText.text = "Has encontrado " + numTrophies + " / 2 letras trofeo";
                 winUiParent.SetActive(true);
-                calificationText.text = "Calificación : " +finalScore.ToString("0.00")+ " / 10";
+                calificationText.text = "Calificación : " + finalScore.ToString("0.00") + " / 10";
 
                 timer = 0.0f;
                 break;
+
             default:
                 Debug.Log("No such state " + newState);
                 break;
@@ -324,8 +334,6 @@ public class GameManager : Singleton<GameManager>
     private void EnterInLevelShowingDescription()
     {
         timer = 0.0f;
-
-
 
         OnShowDescription();
     }
@@ -385,22 +393,28 @@ public class GameManager : Singleton<GameManager>
             case GameState.InMenu:
                 UpdateInMenu(dt);
                 break;
+
             case GameState.InLevelPlaying:
                 UpdateInLevelPlaying(dt);
                 break;
+
             case GameState.InLevelShowingDescription:
                 UpdateInLevelShowingDescription(dt);
                 break;
+
             case GameState.Paused:
                 // unscaled dt?
                 UpdateGamePaused(dt);
                 break;
+
             case GameState.GameOverByDying:
                 timer += dt;
                 break;
+
             case GameState.GameOverByWin:
                 timer += 0.0f;
                 break;
+
             default:
                 Debug.Log("No such state " + currState);
                 break;
@@ -500,7 +514,7 @@ public class GameManager : Singleton<GameManager>
         FadeScreenSpaceUI(FadeState.FadingIn, false);
         CameraManager.Instance.SwitchWorldUICam(false);
     }
-    
+
     /// <summary>
     /// Called when the game starts hiding the description shown in OnShowDescription
     /// </summary>

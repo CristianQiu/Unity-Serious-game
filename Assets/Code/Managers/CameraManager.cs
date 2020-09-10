@@ -1,8 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-
-
+﻿using UnityEngine;
 
 /// <summary>
 /// The camera manager that controls the cameras of all the game
@@ -18,40 +14,6 @@ public class CameraManager : Singleton<CameraManager>
 
     #endregion
 
-    #region Protected Attributes
-
-
-
-    #endregion
-
-    #region Private Attributes
-
-
-	
-    #endregion
-	
-    #region Properties
-	
-
-
-    #endregion
-
-    #region MonoBehaviour Methods
-	
-    // Use this for initialization
-    void Start () 
-    {
-        
-    }
-	
-    // Update is called once per frame
-    void Update () 
-    {
-        
-    }
-	
-    #endregion
-	
     #region Methods
 
     /// <summary>
@@ -61,11 +23,6 @@ public class CameraManager : Singleton<CameraManager>
     public void SwitchWorldUICam(bool state)
     {
         worldUICam.enabled = state;
-    }
-
-    public void Reset()
-    {
-        
     }
 
     #endregion

@@ -5,24 +5,6 @@
 /// </summary>
 public static class Maths
 {
-    #region Public Attributes
-
-
-
-    #endregion
-
-    #region Protected Attributes
-
-
-
-    #endregion
-
-    #region Private Attributes
-
-
-
-    #endregion
-
     #region Properties
 
     public static float GreaterEpsilon { get { return 0.00001f; } }
@@ -142,7 +124,7 @@ public static class Maths
         // calculate elevation
         float y = v.y / r;
         elevation = Mathf.Asin(y);
-        
+
         // and azimuth
         azimuth = Mathf.Atan2(v.z, v.x);
 
@@ -180,6 +162,6 @@ public static class Maths
 
         return v;
     }
-	
+
     #endregion
 }

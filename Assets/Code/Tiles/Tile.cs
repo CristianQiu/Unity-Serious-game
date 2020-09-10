@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 /// <summary>
 /// The basic floor unit of our game
@@ -29,6 +27,7 @@ public class Tile : MonoBehaviour
 
     [Header("Debug")]
     public Color defaultColor = new Color(11.0f, 155.0f, 255.0f, 255.0f);
+
     public Color highlightedAsNeighbourColor = Color.white;
     public bool showDirections = false;
     public bool highlightNeighbours = false;
@@ -36,8 +35,6 @@ public class Tile : MonoBehaviour
     #endregion
 
     #region Protected Attributes
-
-
 
     #endregion
 
@@ -48,6 +45,7 @@ public class Tile : MonoBehaviour
 
     // neighbours
     private Tile fwdTile = null;
+
     private Tile bwdTile = null;
     private Tile rightTile = null;
     private Tile leftTile = null;
@@ -65,6 +63,7 @@ public class Tile : MonoBehaviour
         get { return isEntrance; }
         set { isEntrance = value; }
     }
+
     public bool IsExit
     {
         get { return isExit; }
@@ -73,6 +72,7 @@ public class Tile : MonoBehaviour
 
     // neighbours
     public Tile FwdTile { get { return fwdTile; } }
+
     public Tile BwdTile { get { return bwdTile; } }
     public Tile RightTile { get { return rightTile; } }
     public Tile LeftTile { get { return leftTile; } }
@@ -99,14 +99,12 @@ public class Tile : MonoBehaviour
 
     #region MonoBehaviour Methods
 
-    // Use this for initialization
-    void Start () 
+    private void Start()
     {
         Init();
     }
-	
-    // Update is called once per frame
-    void Update () 
+
+    private void Update()
     {
         ShowDebug();
     }
@@ -141,7 +139,7 @@ public class Tile : MonoBehaviour
         Vector3 elevatedOwnPos = transform.parent.position + heightOffset;
 
         if (fwdTile != null)
-            DebugUtils.DrawArrow(elevatedOwnPos, (fwdTile.transform.parent.position + heightOffset) - elevatedOwnPos , 0.2f, Color.green);
+            DebugUtils.DrawArrow(elevatedOwnPos, (fwdTile.transform.parent.position + heightOffset) - elevatedOwnPos, 0.2f, Color.green);
 
         if (bwdTile != null)
             DebugUtils.DrawArrow(elevatedOwnPos, (bwdTile.transform.parent.position + heightOffset) - elevatedOwnPos, 0.2f, Color.green);
@@ -159,7 +157,8 @@ public class Tile : MonoBehaviour
     private void ShowNeighbourTiles()
     {
         // TODO: fix this: now tiles will never go back to their default color, but with the else in false some of them
-        // are forced to be not highlighted because a tile can be highlighted by 1 tile but may be turned off by another one
+        // are forced to be not highlighted because a tile can be highlighted by 1 tile but may be
+        // turned off by another one
         if (highlightNeighbours)
             HighLightNeighbourTiles(true);
         //else
@@ -205,7 +204,7 @@ public class Tile : MonoBehaviour
     {
         Vector3 fromHeight = transform.parent.position;
         fromHeight.y += distanceToSide;
-        
+
         // forward
         Vector3 fromPos = fromHeight + (transform.parent.forward * distanceToSide);
         fwdTile = GetRaycastedNeighBourTile(fromPos, Vector3.down, gameObject.layer);

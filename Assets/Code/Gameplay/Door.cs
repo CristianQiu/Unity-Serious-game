@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.Playables;
 
 /// <summary>
@@ -14,36 +12,22 @@ public class Door : MonoBehaviour
 
     #endregion
 
-    #region Protected Attributes
-
-
-
-    #endregion
-
     #region Private Attributes
 
     private bool activated = false;
     private PlayableDirector director = null;
-	
-    #endregion
-	
-    #region Properties
-	
-    
-   
+
     #endregion
 
     #region MonoBehaviour Methods
-	
-    // Use this for initialization
-    void Start () 
+
+    private void Start()
     {
         director = GetComponent<PlayableDirector>();
         text.Init();
     }
-	
-    // Update is called once per frame
-    void Update () 
+
+    private void Update()
     {
         text.Update(activated);
     }
@@ -62,7 +46,7 @@ public class Door : MonoBehaviour
         activated = false;
     }
 
-        public void TriggerDoorOpening()
+    public void TriggerDoorOpening()
     {
         director.Play(director.playableAsset);
     }

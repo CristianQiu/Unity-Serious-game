@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 /// <summary>
 /// A floating behaviour noise / sin like
@@ -14,42 +12,28 @@ public class Float : MonoBehaviour
 
     #endregion
 
-    #region Protected Attributes
-
-
-
-    #endregion
-
     #region Private Attributes
 
     private float timer = 0.0f;
 
     #endregion
-	
-    #region Properties
-	
-    
-   
-    #endregion
 
     #region MonoBehaviour Methods
-	
-    // Use this for initialization
-    void Start () 
+
+    private void Start()
     {
         RandomizeTimer();
     }
-	
-    // Update is called once per frame
-    void Update () 
+
+    private void Update()
     {
         float dt = Time.deltaTime;
 
         DoFloat(dt);
     }
-	
+
     #endregion
-	
+
     #region Methods
 
     /// <summary>

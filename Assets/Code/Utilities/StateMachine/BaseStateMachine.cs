@@ -23,15 +23,8 @@ public abstract class BaseStateMachine
 
     public int CurrState
     {
-        get
-        {
-            return currState;
-        }
-
-        set
-        {
-            currState = value;
-        }
+        get { return currState; }
+        set { currState = value; }
     }
 
     #endregion
@@ -76,7 +69,6 @@ public abstract class BaseStateMachine
         if (!initialized)
             Init();
 
-
         // update current state
         states[currState].Update(dt);
 
@@ -93,7 +85,6 @@ public abstract class BaseStateMachine
         // and update the state index
         currState = nextState;
     }
-
 
     /// <summary>
     /// Should be filled to fill the array of BaseStates with custom states that inherit from BaseState

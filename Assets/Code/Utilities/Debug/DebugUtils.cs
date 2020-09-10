@@ -5,30 +5,6 @@
 /// </summary>
 public static class DebugUtils
 {
-    #region Public Attributes
-
-
-
-    #endregion
-
-    #region Protected Attributes
-
-
-
-    #endregion
-
-    #region Private Attributes
-
-
-
-    #endregion
-
-    #region Properties
-
-
-
-    #endregion
-
     #region Methods
 
     /// <summary>

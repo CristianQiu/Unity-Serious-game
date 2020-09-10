@@ -1,5 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -21,13 +20,14 @@ public enum PlayerState
 /// </summary>
 public class Player : MonoBehaviour
 {
-
     #region Delegates
 
     public delegate void PlayerStartedMovingEventHandler(object source, System.EventArgs e);
+
     public event PlayerStartedMovingEventHandler PlayerStartedMoving;
 
     public delegate void PlayerJustStoppedEventHandler(object source, System.EventArgs e);
+
     public event PlayerJustStoppedEventHandler PlayerJustStopped;
 
     #endregion Delegates
@@ -46,20 +46,15 @@ public class Player : MonoBehaviour
 
     [Header("Moving between tiles settings")]
     public float minTimeToWaitBeforeMovingAgain = 0.5f;
+
     public float timeToMoveBetweenTiles = 1.0f;
     public InterpolationFunction interpFunction = InterpolationFunction.SuperSmooth;
 
     [Header("UI")]
-    // fwd, right, bwd, left. Arrows 0-3 Texts 4-7 TextsBgs 8-11
     public CanvasRendererSymmetricAlphaFader[] canvasFaders = null;
+
     public RawImage keySprite = null;
-    public RawImage [] lifes = new RawImage[MaxLifes];
-
-    #endregion
-
-    #region Protected Attributes
-
-
+    public RawImage[] lifes = new RawImage[MaxLifes];
 
     #endregion
 
@@ -98,11 +93,12 @@ public class Player : MonoBehaviour
     #region Properties
 
     public Tile CurrTile { get { return currTile; } }
+
     public bool CanWriteToMove
     {
         get
         {
-            return currState == PlayerState.Idle && 
+            return currState == PlayerState.Idle &&
                    stateTimer >= minTimeToWaitBeforeMovingAgain &&
                    GameManager.Instance.CurrState == GameState.InLevelPlaying &&
                    disabled == false;
@@ -144,19 +140,12 @@ public class Player : MonoBehaviour
 
     #region MonoBehaviour Methods
 
-    void Awake()
-    {
-        
-    }
-
-    // Use this for initialization
-    void Start () 
+    private void Start()
     {
         Init();
     }
-	
-    // Update is called once per frame
-    void Update () 
+
+    private void Update()
     {
         float dt = Time.deltaTime;
 
@@ -178,7 +167,7 @@ public class Player : MonoBehaviour
         // key
 
         Key key = other.GetComponent<Key>();
-        
+
         if (key != null)
         {
             hasKey = true;
@@ -232,7 +221,7 @@ public class Player : MonoBehaviour
                 return;
 
             TakeLife(+1);
-            
+
             Destroy(health.gameObject);
         }
     }
@@ -256,12 +245,15 @@ public class Player : MonoBehaviour
             case PlayerState.Invalid:
                 Debug.Log("Initializing Player from invalid state, ignore this if it happened when the game just starts");
                 break;
+
             case PlayerState.Idle:
                 ExitIdle();
                 break;
+
             case PlayerState.MovingToTile:
                 ExitMovingToTile();
                 break;
+
             default:
                 Debug.Log("No such state " + currState);
                 break;
@@ -272,9 +264,11 @@ public class Player : MonoBehaviour
             case PlayerState.Idle:
                 EnterIdle();
                 break;
+
             case PlayerState.MovingToTile:
                 EnterMovingToTile();
                 break;
+
             default:
                 Debug.Log("No such state " + newState);
                 break;
@@ -313,7 +307,6 @@ public class Player : MonoBehaviour
     /// </summary>
     private void EnterIdle()
     {
-      
     }
 
     /// <summary>
@@ -337,9 +330,11 @@ public class Player : MonoBehaviour
             case PlayerState.Idle:
                 UpdateIdle(dt);
                 break;
+
             case PlayerState.MovingToTile:
                 UpdateMovingToTile(dt);
                 break;
+
             default:
                 Debug.Log("No such state " + currState);
                 break;
@@ -362,8 +357,8 @@ public class Player : MonoBehaviour
 
         if (shouldEnterMovingToTile)
         {
-            // is going to clash with an enemy? 
-            // if so, we may want to join the InLevelShowingDescription state of the game manager
+            // is going to clash with an enemy? if so, we may want to join the
+            // InLevelShowingDescription state of the game manager
             bool clashWithEnemy = IsGoingToClashWithEnemy(out enemyClashedWith);
             GameManager.Instance.EnemyEvent = clashWithEnemy;
 
@@ -377,7 +372,7 @@ public class Player : MonoBehaviour
             }
             else
                 SwitchState(PlayerState.MovingToTile, false);
-        }  
+        }
         else if (shouldEnterSolveDoorEnigma)
         {
             currDoor = GetDirDoor(movingDir);
@@ -407,7 +402,7 @@ public class Player : MonoBehaviour
                 shouldWaitBeforeMovingToTile = false;
                 beforeMovingTimer = 0.0f;
                 return;
-            }     
+            }
         }
 
         timeMovingToTile += dt;
@@ -488,7 +483,7 @@ public class Player : MonoBehaviour
         {
             canvasFaders[0].StartFade(newState, false);
             canvasFaders[4].StartFade(newState, false);
-        } 
+        }
         if (CanMoveRight)
         {
             canvasFaders[1].StartFade(newState, false);
@@ -498,7 +493,7 @@ public class Player : MonoBehaviour
         {
             canvasFaders[2].StartFade(newState, false);
             canvasFaders[6].StartFade(newState, false);
-        } 
+        }
         if (CanMoveLeft)
         {
             canvasFaders[3].StartFade(newState, false);
@@ -525,7 +520,8 @@ public class Player : MonoBehaviour
     }
 
     /// <summary>
-    /// Move to a tile, the player won't move if it's not in idle state (dir is a number between 0 and 3, 0 fwd, 1 right, 2 bwd, 3 left)
+    /// Move to a tile, the player won't move if it's not in idle state (dir is a number between 0
+    /// and 3, 0 fwd, 1 right, 2 bwd, 3 left)
     /// </summary>
     /// <param name="dir"></param>
     public void MoveTo(int dir)
@@ -552,15 +548,19 @@ public class Player : MonoBehaviour
             case 0:
                 tile = currTile.FwdTile;
                 break;
+
             case 1:
                 tile = currTile.RightTile;
                 break;
+
             case 2:
                 tile = currTile.BwdTile;
                 break;
+
             case 3:
                 tile = currTile.LeftTile;
                 break;
+
             default:
                 Debug.Log("This dir is not allowed, it must be between 0 and 3: " + dir);
                 break;
@@ -578,15 +578,19 @@ public class Player : MonoBehaviour
             case 0:
                 blocked = (currTile.blockedPath.doorFwd != null);
                 break;
+
             case 1:
                 blocked = (currTile.blockedPath.doorRight != null);
                 break;
+
             case 2:
                 blocked = (currTile.blockedPath.doorBwd != null);
                 break;
+
             case 3:
                 blocked = (currTile.blockedPath.doorLeft != null);
                 break;
+
             default:
                 Debug.Log("This dir is not allowed, it must be between 0 and 3: " + dir);
                 break;
@@ -609,15 +613,19 @@ public class Player : MonoBehaviour
             case 0:
                 door = currTile.blockedPath.doorFwd;
                 break;
+
             case 1:
                 door = currTile.blockedPath.doorRight;
                 break;
+
             case 2:
                 door = currTile.blockedPath.doorBwd;
                 break;
+
             case 3:
                 door = currTile.blockedPath.doorLeft;
                 break;
+
             default:
                 Debug.Log("This dir is not allowed, it must be between 0 and 3: " + dir);
                 break;
@@ -663,15 +671,19 @@ public class Player : MonoBehaviour
             case 0:
                 currTile.blockedPath.doorFwd = null;
                 break;
+
             case 1:
                 currTile.blockedPath.doorRight = null;
                 break;
+
             case 2:
                 currTile.blockedPath.doorBwd = null;
                 break;
+
             case 3:
                 currTile.blockedPath.doorLeft = null;
                 break;
+
             default:
                 Debug.Log("This dir is not allowed, it must be between 0 and 3: " + dir);
                 break;
@@ -679,7 +691,8 @@ public class Player : MonoBehaviour
     }
 
     /// <summary>
-    /// Checks if the player is going to clash with an enemy when both arrive the next supposed tile they should be
+    /// Checks if the player is going to clash with an enemy when both arrive the next supposed tile
+    /// they should be
     /// </summary>
     private bool IsGoingToClashWithEnemy(out Enemy enemyClashedWith)
     {
@@ -697,7 +710,6 @@ public class Player : MonoBehaviour
                 enemyClashedWith = enemies[i];
                 break;
             }
-                
         }
 
         return clash;
@@ -724,7 +736,6 @@ public class Player : MonoBehaviour
             GameManager.Instance.SwitchState(GameState.GameOverByDying, false);
             return;
         }
-          
 
         for (int i = 0; i < life; i++)
         {
@@ -765,8 +776,8 @@ public class Player : MonoBehaviour
     /// <param name="args"></param>
     protected virtual void OnWorldUIFinishedFadingOut(object source, System.EventArgs args)
     {
-        // not strictly correct but i'm being too much perfectionist perhaps, each faded element should have an id
-        // to only reset its own state
+        // not strictly correct but i'm being too much perfectionist perhaps, each faded element
+        // should have an id to only reset its own state
         PlayerWordWriter writer = GetComponent<PlayerWordWriter>();
         writer.ResetAvailableDirTexts();
     }
@@ -807,7 +818,6 @@ public class Player : MonoBehaviour
     /// </summary>
     protected virtual void OnShowDescription(object source, System.EventArgs args)
     {
-
     }
 
     /// <summary>

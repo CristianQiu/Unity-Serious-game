@@ -7,6 +7,7 @@ public abstract class BaseState
 
     // the time the state has been active
     protected float timer;
+
     // the state machine that owns this state
     protected BaseStateMachine stateMachine;
 
@@ -14,7 +15,8 @@ public abstract class BaseState
 
     #region Properties
 
-    // the identifier of the state. It should be associated to one state in the stateMachine states enumeration !
+    // the identifier of the state. It should be associated to one state in the stateMachine states
+    // enumeration !
     public abstract int TypeIdentifier { get; }
 
     #endregion
@@ -27,7 +29,7 @@ public abstract class BaseState
     /// <param name="stateMachine"></param>
     public BaseState(BaseStateMachine stateMachine)
     {
-        Init(stateMachine);        
+        Init(stateMachine);
     }
 
     /// <summary>
@@ -70,10 +72,11 @@ public abstract class BaseState
     }
 
     /// <summary>
-    /// Checks if we should change the state and if so it should return the next state identifier, otherwise it returns its own state identifier
+    /// Checks if we should change the state and if so it should return the next state identifier,
+    /// otherwise it returns its own state identifier
     /// </summary>
     /// <returns></returns>
     public abstract int MustChangeState();
 
-	#endregion
+    #endregion
 }
